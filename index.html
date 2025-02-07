@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Regresivo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('fondo.webp') no-repeat center center;
+            background-size: cover;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+        }
+        #contador {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-family: Arial, sans-serif;
+            color: white;
+            font-weight: bold;
+        }
+        .draggable {
+            -webkit-app-region: drag; /* Permite arrastrar la ventana */
+        }
+
+        #cerrar {
+            -webkit-app-region: no-drag; /* Evita que el botón cierre mueva la ventana */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body class="draggable">
+    <img id="cerrar" src="cerrar.png" alt="Cerrar">
+    <div id="contador">30</div>
+
+    <script>
+        let tiempo = 30;
+        const contador = document.getElementById("contador");
+
+        const intervalo = setInterval(() => {
+            tiempo--;
+            contador.textContent = tiempo;
+            if (tiempo <= 0) {
+                clearInterval(intervalo);
+                contador.textContent = "¡Tiempo terminado!";
+            }
+        }, 1000);
+
+        // Cerrar la ventana al hacer clic en el botón
+        document.getElementById("cerrar").addEventListener("click", () => {
+            window.electronAPI.closeApp();
+        });
+    </script>
+</body>
+</html>
